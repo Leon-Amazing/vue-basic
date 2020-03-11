@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="box"></div>
+  <div id="app">
+    <div>{{msg}}</div>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  // 人的生命周期: 蝌蚪、婴儿、少年、青年、成年、中年、老年、去了  APTX-4869
+
+  /**
+    任何组件都有生命周期，有生命周期钩子函数 => 回调函数 => 依赖于另外一个函数的触发而触发
+    钩子函数写在Vue实例的选项对象上，不是写在methods里面。methods写的是自定义函数
+  */
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      msg: '数据'
+    },
+    methods: {
+      show() {
+
+      }
+    },
+    // 在组件创建完成之前的回调函数
+    beforeCreate() {
+      // 在这个回调函数内部已经可以使用 this
+      // 但是，data数据以及methods方法还没有被挂载(注入)到Vue实例身上
+      // console.log('组件创建完成之前的实例：', this);
+      // console.log('组件创建完成之前的数据：', this.msg);
+      // console.log('组件创建完成之前的方法：', this.show);
+    },
+
+    // 组件创建完成之后的回调函数
+    created() {
+      // 在这个回调函数内部已经完成了数据和方法的挂载，可以直接访问，通常情况下都是在这个函数内进行数据请求
+      console.log('组件创建完成之后的实例：', this);
+      console.log('组件创建完成之后的数据：', this.msg);
+      console.log('组件创建完成之后的方法：', this.show);
+
+      console.log(document.getElementById('app')); // 虚拟的节点，真实的页面上是没有这个元素的
+    },
+
+    // 组件挂载到真实DOM节点之前的回调函数
+    beforeMount() {
+      console.log(document.getElementById('app')); // 虚拟的节点，真实的页面上是没有这个元素的
+    },
+
+    // 组件挂载到真实DOM节点之后的回调函数
+    mounted() {
+      console.log(document.getElementById('app'));
+    },
+
+    // 组件的数据在被修改的同时触发的回调函数
+    beforeUpdate() {
+      console.log('数据正在被更新', this);
+    },
+
+    // 组件的数据重新渲染到页面上完成之后的回调函数
+    updated() {
+      console.log('数据已经渲染完成', this);
+    },
+
+    // 组件销毁之前的回到函数  销毁之后无法更新视图，数据依旧可以修改
+    beforeDestroy() {
+      console.log('组件销毁之前');
+    },
+
+    // 组件销毁之后的回调函数
+    destroyed() {
+      console.log('组件销毁之后');
+    }
+  })
+</script>
+</html>

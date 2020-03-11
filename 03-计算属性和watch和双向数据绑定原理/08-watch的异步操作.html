@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    价格：
+    <input type="text" v-model="price">
+    *
+    数量：
+    <input type="text" v-model="count">
+    =
+    总价：
+    <input type="text" v-model="total" disabled>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      price: 0,
+      count: 10,
+      total: 0
+    },
+    watch: {
+      // watch 专门用于执行异步操作或者开销很大(性能消耗很大)的操作
+      /**
+       * watch 计算属性 方法的区别
+       * watch 可以异步操作，执行开销很大的操作
+       * 计算属性  不可以异步操作，并且性能更好，简单
+       * 方法  性能更差
+      */
+      'price': function() {
+        setTimeout(() => {
+          this.total = this.price * this.count;
+        }, 1000)
+      }
+    }
+  })
+</script>
+</html>

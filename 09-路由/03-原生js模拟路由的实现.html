@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    section {
+      margin-top: 20px;
+    }
+    section div {
+      display: none;
+      width: 1000px;
+      height: 300px;
+      font-size: 100px;
+      text-align: center;
+      border: 10px solid;
+    }
+    section div:first-child {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <a href="#home">首页</a>
+    <a href="#product">产品</a>
+    <a href="#about">关于</a>
+  </div>
+  <section>
+    <div id="home">
+      我是首页
+    </div>
+    <div id="product">
+      我是产品
+    </div>
+    <div id="about">
+      我是关于
+    </div>
+  </section>
+</body>
+<script>
+  // 页面不需要频繁跳转，用户体验良好
+  // 不会出现多次频繁的请求服务器，服务器压力减少
+  // 数据交互非常简单
+  document.querySelectorAll('a').forEach(item => {
+    item.addEventListener('dblclick', function() {
+      // console.log(location.hash);
+      const oSection = document.querySelector('section');
+      let aDiv = oSection.querySelectorAll('div');
+      aDiv.forEach(item => {
+        item.style.display = 'none';
+        if(item.id === location.hash.slice(1)) {
+          item.style.display = 'block';
+        }
+      })
+    })
+  })
+</script>
+</html>

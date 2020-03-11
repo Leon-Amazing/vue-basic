@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+</body>
+<script src="./axios.min.js"></script>
+<script>
+  const request = axios.create({
+    // 将真正的请求地址重复的部分配置在baseURL属性上
+    baseURL: 'https://easy-mock.com/mock/5cb58b6c649b1b6121ad40de/Demo',
+
+    // 对用户发送的数据可以进行拦截，并且修改
+    transformRequest: [function(data) {
+      data.add = '哈哈哈我修改了数据';
+      console.log(data);
+      return data
+    }],
+
+    // 配置请求头
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded'
+    },
+
+    // get 请求发送数据必须写在params里面
+    params: {
+      name: 'abc'
+    },
+
+    // 设置请求超时，默认是没有超时
+    timeout: 5000
+  });
+
+  request({
+    url: '/getLoginLog',
+    method: 'post',
+    data: {
+      pageIndex: 1,
+      pageSize: 20
+    }
+  }).then(res => {
+    console.log(res);
+  })
+
+  console.dir(request);
+</script>
+</html>

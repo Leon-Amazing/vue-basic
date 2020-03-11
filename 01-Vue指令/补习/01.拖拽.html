@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+     #box {
+        width: 200px;
+        height: 200px;
+        background: red;
+        position: absolute;
+        cursor: pointer;
+    }
+    *{
+        margin: 0;
+    }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+<script>
+     var oDiv = document.querySelector('div');
+    
+     oDiv.addEventListener('mousedown',function(ev){
+        var divX = ev.clientX - oDiv.offsetLeft;
+        var divY = ev.clientY - oDiv.offsetTop;
+        document.addEventListener('mousemove', move);
+        function move(ev){
+            oDiv.style.left = ev.clientX - divX + 'px';
+            oDiv.style.top =ev.clientY - divY + 'px';
+        }
+        document.addEventListener('mouseup',function(){
+            document.removeEventListener('mousemove',move);
+        })
+     })
+     
+    
+</script>
+</html>

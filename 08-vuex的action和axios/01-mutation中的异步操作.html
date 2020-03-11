@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{num}}
+    <button type="button" @click="change">改变</button>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vuex.js"></script>
+<script>
+  const store = new Vuex.Store({
+    state: {
+      num: 100
+    },
+    mutations: {
+      // mutations 里面的数据处理函数必须是同步函数，不可以执行异步操作
+      change(state) {
+        setTimeout(() => {
+          state.num += 1;
+        }, 1000);
+      }
+    }
+  })
+  new Vue({
+    el: '#app',
+    store,
+    computed: {
+      num() {
+        return this.$store.state.num;
+      }
+    },
+    methods: {
+      change() {
+        this.$store.commit('change');
+      }
+    }
+  })
+</script>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <my-app v-on:get-num="onGetNum"></my-app>
+    <my-com v-bind:text="value"></my-com>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  Vue.component('my-app', {
+    template: '<div v-on:click="show">{{msg}}</div>',
+    data() {
+      return {
+        msg: '111111'
+      }
+    },
+    methods: {
+      show() {
+        this.$emit('get-num', this.msg);
+      }
+    }
+  })
+  Vue.component('my-com', {
+    template: '<div>2222{{text}}</div>',
+    props: ['text']
+  })
+  new Vue({
+    el: '#app',
+    data: {
+      value: ''
+    },
+    methods: {
+      onGetNum(val) {
+        this.value = val;
+      }
+    }
+  })
+</script>
+</html>

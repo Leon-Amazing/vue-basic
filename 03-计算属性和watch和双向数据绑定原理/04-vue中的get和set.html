@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{obj.msg}}
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      // msg: '我是数据',
+      value: '123',
+      obj: {
+        name: '杨幂'
+      },
+      set: ''
+    }
+  });
+
+  /**
+    Vue.set() 如果第一个参数写的是Vue的实例，那么只能修改属性值，不能添加属性
+    如果第一个参数写的是实例上的某个对象数据，既可以修改属性也可以添加属性
+  */
+  // 全局set函数
+  Vue.set(vm.obj, 'msg', '我是修改之后的数据');
+
+  // Vue实例身上的set函数
+  vm.$set(vm.obj, 'sex', '女');
+
+  // 这个方式不可以操作data对象
+  // Object.defineProperty(vm, 'value', {
+  //   enumerable: true,
+  //   get() {
+  //     console.log('我被访问了');
+  //     return 18
+  //   },
+  //   set(val) {
+
+  //   }
+  // })
+</script>
+</html>

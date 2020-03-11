@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    #nav {
+      height: 80px;
+      background: #ccc;
+    }
+    a {
+      display: inline-block;
+      font-size: 20px;
+      padding: 30px 40px;
+      text-decoration: none;
+      color: #333;
+    }
+    .is-active {
+      background: #fff;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="nav">
+      <router-link to="/home">首页</router-link>
+      <router-link to="/product">产品</router-link>
+      <router-link to="/about">关于</router-link>
+    </div>
+    <router-view></router-view>
+  </div>
+</body>
+<!-- <script src="./vue.js"></script>
+<script src="./vue-router.js"></script> -->
+<!-- <script src="./component.js"></script>
+<script src="./router.js"></script> -->
+<script src="./main.js"></script>
+<script>
+  // AMD CMD 设计模式
+  /**
+   *
+   *  AMD 提前将所有需要的东西准备好，然后执行，优点：执行过程不会因为外部原因导致加载速度变慢，坏处：性能不够好
+   * import 导入  export 导出
+   *
+   *  CMD 需要什么东西，就临时去拿什么东西，然后执行。优点：性能比较好，加载速度快，坏处：外部原因容易导致加载速度慢
+   *  require() 导入  module.export
+  */
+</script>
+</html>

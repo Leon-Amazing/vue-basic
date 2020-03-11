@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{msg}}
+    <button type="button" v-on:click="change">修改</button>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vuex.js"></script>
+<script>
+  const store = new Vuex.Store({
+    state: {
+      num: 1
+    },
+    /**
+     * 想修改store里面的数据，不能直接修改，必须通过提交mutation来修改数据
+     * mutations 是一个对象
+     * mutations对象里面写的是所有修改state数据的函数
+     * mutations: {
+     *   add(第一个参数, 第二个参数) {
+     *
+     *   }
+     * }
+     * 第一个参数：当前容器的state对象本身
+     * 第二个参数：由commit函数的第二个参数传进来的
+    */
+    mutations: {
+      change(state, payload) {
+        console.log(payload);
+        if(Math.random() > 0.5) {
+          state.num += payload.num;
+        } else {
+          state.num += payload.value;
+        }
+      }
+    }
+  });
+
+  let vm = new Vue({
+    el: '#app',
+    store,
+    computed: {
+      'msg': function() {
+        return this.$store.state.num;
+      }
+    },
+    methods: {
+      change() {
+        // 尽量不要直接修改state里面的数据
+        // this.$store.state.num += 1;
+
+        // 修改store里面的数据，需要显示提交mutation，利用 this.$store.commit('store容器里面mutations对象里面的函数名', 额外传入的参数)
+        // commit 函数最多传两个参数
+        // this.$store.commit('change', {
+        //   num: 10,
+        //   value: 20
+        // })
+
+        this.$store.commit({
+          type: 'change',
+          num: 10,
+          value: 20
+        })
+      }
+    }
+  });
+</script>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="msg">
+    {{msg}}
+    <input type="text" v-my-model="1 + 1">
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  /**
+    创建自定义指令的静态函数
+    Vue.directive(第一个参数，第二个参数)
+    第一个参数： 自定义指令的名字
+    第二个参数： json对象
+
+    自定义指令无论名字是什么，使用的时候必须加上 v-
+  */
+  Vue.directive('my-model', {
+    // bind函数，在自定义的指令被挂载到元素身上的时候触发
+    // bind(第一个参数， 第二个参数)
+    // 第一个参数：绑定了该自定义指令的元素本身
+    // 第二个参数：指令的对象信息
+    /**
+      binding对象信息包含以下属性：
+          name: 指令名，不包含 v-
+          value: 指令的表达式的返回值
+          expression: 指令的表达式， 1 + 1
+          arg: 参数
+          modifiers: 修饰符对象
+    */
+    bind(el, binding) {
+      // el.type = 'checkbox';
+      console.log(binding);
+    }
+  });
+
+  new Vue({
+    el: '#app',
+    data: {
+      msg: ''
+    }
+  })
+</script>
+</html>

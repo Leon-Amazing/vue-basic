@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model='msg'/>
+        <button v-on:click="show">插入数据</button>
+        <ul>
+            <li v-for="(item,i) in arr" >
+               <span v-bind:contenteditable='item.isEdit'> {{item.value}}</span>
+                <button v-on:click='onUp(i)'>上移</button>
+                <button  v-on:click='onDown(i)'>下移</button>
+                <button  v-on:click='onDel(i)'>删除</button>
+                <button  v-on:click='onEdit(i)'>编辑</button>
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+   var vm = new Vue({
+       el:'#app',
+       data:{
+         msg:'',
+         arr:[]
+       },
+       methods:{
+           show(){
+               vm.arr.push({
+                   value:vm.msg,
+                   isEdit:false
+                   });
+               vm.msg = '';
+           },
+           onUp(index){
+               if(index===0){
+                   alert('到头了')
+               }else{
+                   vm.arr.splice(index-1,0,vm.arr.splice(index,1)[0])
+               }             
+           },
+           onDown(index){
+               if(index===vm.arr.length-1){
+                   alert('到底了')
+               }else{
+                   vm.arr.splice(index+1,0,vm.arr.splice(index,1)[0])
+               }  
+           },
+           onDel(index){
+               vm.arr.splice(index,1);
+           },
+           onEdit(index){
+               vm.arr[index].isEdit = true;
+           }
+       }
+   })
+</script>
+</html>

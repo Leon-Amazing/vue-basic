@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    #nav {
+      height: 80px;
+      background: #ccc;
+    }
+    a {
+      display: inline-block;
+      font-size: 20px;
+      padding: 30px 40px;
+      text-decoration: none;
+      color: #333;
+    }
+    .is-active {
+      background: #fff;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="nav">
+      <router-link to="/home">首页</router-link>
+      <router-link to="/product">产品</router-link>
+      <router-link to="/about">关于</router-link>
+    </div>
+    <router-view></router-view>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vue-router.js"></script>
+<script>
+
+  const list = {
+    monitor: {
+      name: '欧阳',
+      sex: 1,
+      age: 19
+    },
+    study: {
+      name: '宇霖',
+      sex: 1,
+      age: 20
+    },
+    gf: {
+      name: 'undefined',
+      sex: 'undefined',
+      age: '18'
+    }
+  }
+
+  const Home = {
+    template: `
+      <div>
+        <p>这是首页</p>
+      </div>
+    `
+  };
+  const Product = {
+    template: `
+      <div>
+        <p>这是产品页</p>
+        <h2>产品信息</h2>
+        <router-link to="/product/monitor" exact>班长</router-link>
+        <router-link to="/product/study">学习委员</router-link>
+        <router-link to="/product/gf">班长的女朋友</router-link>
+        <router-view></router-view>
+      </div>
+    `
+  };
+  const About = {
+    template: `
+      <div>
+        <p>这是关于页</p>
+      </div>
+    `
+  };
+
+  // key === 'sex' ? value === 1 ? '男' : value === 0 ? '女' : 'undefined' : value
+  const Component = {
+    template: `
+      <div>
+        <p>信息</p>
+        <ul>
+          <li v-for="(value, key) in data">{{key}}-----{{key === 'sex' ? value === 1 ? '男' : value === 0 ? '女' : 'undefined' : value}}</li>
+        </ul>
+      </div>
+    `,
+    data() {
+      return {
+        data: null
+      }
+    },
+    watch: {
+      $route(to) {
+        console.log(to)
+        console.log(this.$route);
+        const pathName = to.params.pathName;
+        switch(pathName) {
+          case 'study':
+            this.data = list[pathName];
+            console.log (list[pathName])
+            break;
+          case 'gf':
+            this.data = list[pathName];
+            break;
+          default:
+            this.data = list[pathName];
+        }
+      }
+    },
+    created() {
+      this.data = list['monitor']
+    }
+  };
+  // const Study = {
+  //   template: `
+  //     <div>
+  //       <p>这是学习委员</p>
+  //     </div>
+  //   `
+  // };
+  // const GF = {
+  //   template: `
+  //     <div>
+  //       <p>undefined</p>
+  //     </div>
+  //   `
+  // };
+
+  const router = new VueRouter({
+    linkActiveClass: 'is-active',
+    routes: [
+      {
+        path: '/home',
+        component: Home
+      },
+      {
+        path: '/product',
+        redirect: '/product/monitor',
+        component: Product,
+        children: [
+          {
+            path: ':pathName',
+            component: Component
+          }
+        ]
+      },
+      {
+        path: '/about',
+        component: About
+      }
+    ]
+  })
+
+  new Vue({
+    el: '#app',
+    router
+  })
+</script>
+</html>

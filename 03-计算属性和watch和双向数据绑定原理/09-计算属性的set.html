@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    价格：
+    <input type="text" v-model="price">
+    *
+    数量：
+    <input type="text" v-model="count">
+    =
+    总价：
+    <input type="text" v-model="total" disabled>
+    {{sum}}
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      price: 0,
+      count: 0,
+      sum: 0
+    },
+    computed: {
+      // 'total': {
+      //   get() {
+      //     return this.price + ' ' + this.count;
+      //   },
+      //   // 计算属性中set极少情况使用
+      //   // 计算属性的属性值不可以修改
+      //   set(val) {
+      //     console.log(val);
+      //     this.price = val.split(' ')[0];
+      //     this.count = val.split(' ')[1];
+      //   }
+      // }
+      'total': function() {
+        return this.price * this.count;
+      }
+    }
+  })
+</script>
+</html>

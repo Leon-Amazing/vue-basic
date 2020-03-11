@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- <router-link to="/home?username=123">首页</router-link> -->
+    <!-- <router-link :to="{path: '/home', query: {username: 123}}">首页</router-link> -->
+    <router-view></router-view>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vue-router.js"></script>
+<script>
+  const Login = {
+    template: '<div><button type="button" @click="login">登录</button></div>',
+    methods: {
+      login() {
+        setTimeout(() => {
+          setCookie('name', '123');
+          if(this.$route.query['redirect']) {
+            this.$router.push(this.$route.query.redirect)
+          } else {
+            this.$router.push('/home');
+          }
+        }, 1000)
+      }
+    }
+  }
+  const Home = {
+    template: `
+      <div>
+        <router-link to="/home">首页</router-link>
+        <router-link to="/home/product">产品</router-link>
+        <router-link to="/abc">关于</router-link>
+        <router-link to="/ghj">联系方式</router-link>
+        <router-view></router-view>
+      </div>`,
+    watch: {
+      $route(to) {
+        if(to.fullPath.indexOf('product') != -1) {
+          if(!getCookie('name')) {
+            this.$router.push({
+              path: '/login',
+              query: {
+                redirect: to.fullPath
+              }
+            });
+          } else {
+            alert(1)
+          }
+        }
+      }
+    }
+  }
+
+  function setCookie(key, value) {
+    document.cookie = key + '=' + value;
+  }
+  function getCookie(key) {
+    const cookie = document.cookie.replace(/\s/g, '');
+    const arr = cookie.split(';');
+    let value = '';
+    arr.forEach(item => {
+      let c = item.split('=');
+      if(key === c[0]) {
+        value = c[1];
+      }
+    })
+    return value;
+  }
+  function removeCookie(key) {
+    document.cookie = key + '=' + ' ';
+  }
+
+  const Product = {
+    template: '<div>这是产品</div>'
+  }
+  const router = new VueRouter({
+    routes: [
+      {
+        path: '/login',
+        component: Login
+      },
+      {
+        path: '/home',
+        component: Home,
+        children: [
+          {
+            path: '',
+            component: {
+              template: '<div>这是首页</div>'
+            }
+          },
+          {
+            path: 'product',
+            component: Product
+          }
+        ]
+      },
+      {
+        path: '/',
+        redirect: '/login'
+      }
+    ]
+  })
+  new Vue({
+    el: '#app',
+    router
+  })
+</script>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{num}}
+    <button type="button" @click="change">修改</button>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vuex.js"></script>
+<script>
+  const store = new Vuex.Store({
+    state: {
+      num: 100
+    },
+    mutations: {
+      CHANGE(state, val) {
+        state.num += val;
+      }
+    },
+    // actions 可以用来做异步操作，这个对象里面写的依然是函数
+    actions: {
+      /**
+        actions 对象里面的函数同样接收两个参数
+        change(第一个参数, 第二个参数)
+        第一个参数: 是与当前容器store属性方法基本一致的另外一个对象
+        第二个参数: 由组件传递过来的数据
+      */
+      change({commit, dispatch}, payload) {
+        // console.log(store1 == store); // false
+        setTimeout(() => {
+          if(Math.random() > 0.5) {
+            commit('CHANGE', payload.value);
+          } else {
+            commit('CHANGE', payload.num);
+          }
+        }, 1000)
+      }
+    }
+  });
+
+
+
+
+  // var {a, b, c} = {a: 1,b: 2,c: 10};
+
+  new Vue({
+    el: '#app',
+    store,
+    computed: {
+      num() {
+        return this.$store.state.num;
+      }
+    },
+    methods: {
+      change() {
+        /**
+          dispatch 用于触发actions里面的函数，同样只接收两个参数
+          dispatch(第一个参数, 第二个参数)
+          第一个参数: 需要触发的actions里面的函数名，要加引号
+          第二个参数: 需要传递过去的额外的数据，如果传多个数据，写成对象，或者数组
+        */
+        this.$store.dispatch('change', {
+          value: 10,
+          num: 20
+        })
+      }
+    }
+  })
+</script>
+</html>

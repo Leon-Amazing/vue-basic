@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="msg">
+    <button type="button" v-on:click="send">发表留言</button>
+    <ul>
+      <li contenteditable v-for="item in list">{{item}}</li>
+    </ul>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  // var oText = document.querySelector('input');
+  // var oBtn = document.querySelector('button');
+  // var oUl = document.querySelector('ul');
+
+  // oBtn.onclick = function() {
+  //   var value = oText.value;
+  //   var oLi = document.createElement('li');
+  //   oLi.innerHTML = value;
+  //   oUl.appendChild(oLi);
+  //   oText.value = '';
+  // }
+
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      msg: '',
+      list: []
+    },
+    methods: {
+      send() {
+        // alert(vm.msg);
+        // alert(document.getElementsByTagName('input')[0].value);
+        vm.list.push(vm.msg);
+        vm.msg = '';
+      }
+    }
+  })
+</script>
+</html>

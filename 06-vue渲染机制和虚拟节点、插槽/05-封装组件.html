@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .my-button {
+      background: #fff;
+      border: 1px solid #dcdfe6;
+      border-radius: 4px;
+      padding: 12px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: .1s;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .my-button--default {
+      color: #000;
+      background: #fff;
+      border-color: #dcdfe6;
+    }
+    .my-button--primary {
+      color: #fff;
+      background: #409eff;
+      border-color: #409eff;
+    }
+    .my-button--success {
+      color: #fff;
+      background: #67c23a;
+      border-color: #67c23a;
+    }
+    .my-button--info {
+      color: #fff;
+      background: #909399;
+      border-color: #909399;
+    }
+    .my-button--waring {
+      color: #fff;
+      background: #e6a23c;
+      border-color: #e6a23c;
+    }
+    .my-button--danger {
+      color: #fff;
+      background: #f56c6c;
+      border-color: #f56c6c;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <my-button v-on:click="show" v-slot>默认按钮</my-button>
+    <my-button type="primary">
+      <template v-slot>主要按钮</template>
+    </my-button>
+    <my-button type="success" v-slot>成功按钮</my-button>
+    <my-button type="info"></my-button>
+    <my-button type="waring"></my-button>
+    <my-button type="danger"></my-button>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  Vue.component('my-button', {
+    template: `
+      <button
+        type="button"
+        class="my-button"
+        v-bind:class="'my-button--' + type"
+        v-on:click="clickHandle"
+      >
+        <slot></slot>
+      </button>
+    `,
+    props: {
+      type: {
+        type: String,
+        default: 'default'
+      }
+    },
+    methods: {
+      clickHandle() {
+        this.$emit('click');
+      }
+    }
+  })
+  new Vue({
+    el: '#app',
+    methods: {
+      show() {
+        alert(1);
+      }
+    }
+  })
+</script>
+</html>

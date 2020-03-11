@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+    #iframe {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <a href="#baidu">百度</a>
+  <a href="#bilibili">B站</a>
+  <iframe src="" id="iframe" frameborder="0"></iframe>
+</body>
+<script>
+  // 路由 => 渲染页面(组件) => 根据浏览器地址栏的变化匹配到不同的路由
+
+
+  // 每次打开页面都需要重新请求，万一网络不稳定，刚刚还能打开的页面现在就挂了
+  document.querySelectorAll('a').forEach(item => {
+    item.addEventListener('click', function() {
+      if(this.innerText === '百度') {
+        document.querySelector('#iframe').src = 'http://www.baidu.com';
+      } else if(this.innerText === 'B站') {
+        document.querySelector('#iframe').src = 'http://www.bilibili.com';
+      }
+    })
+  })
+</script>
+</html>

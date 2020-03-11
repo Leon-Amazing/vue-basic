@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    价格：
+    <input type="text" v-model="price">
+    *
+    数量：
+    <input type="text" v-model="count">
+    =
+    总价：
+    <input type="text" v-model="total" disabled>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      price: 0,
+      count: 0,
+      total: 0
+    },
+    watch: {
+      'price': function(newValue, oldValue) {
+        vm.total = vm.count * newValue;
+      },
+      'count': function(val) {
+        vm.total = vm.price * val;
+      }
+    },
+    methods: {
+      // onPrice() {
+      //   vm.total = (vm.price * vm.count).toFixed(2);
+      // },
+      // onCount() {
+      //   vm.total = (vm.price * vm.count).toFixed(2);
+      // },
+      // onTotal() {
+      //   vm.price = (vm.total / vm.count).toFixed(2);
+      // }
+    }
+  })
+</script>
+</html>

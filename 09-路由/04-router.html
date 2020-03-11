@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <a href="/home">首页</a>
+    <a href="/product">产品</a>
+    <a href="/about">关于</a>
+    <!-- router-view用于展示符合条件(地址栏的哈希与路由配置相匹配的路由)的组件 -->
+    <router-view></router-view>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vue-router.js"></script>
+<script>
+  // 使用VueRouter构造函数启动路由，路由的配置参数写在构造函数的实参上
+  const router = new VueRouter({
+    mode: 'history',
+    // routes 所有的路由配置信息组成的数组，数组里面的每一个对象都是一个路由所代表的信息
+    routes: [
+      {
+        // path 用来与地址进行匹配的路径，只有匹配到了才显示路由对应的组件
+        path: '/home',
+        component: {
+          template: '<div>首页{{msg}}</div>',
+          data() {
+            return {
+              msg: '111111'
+            }
+          },
+          created() {
+            console.log(this.msg);
+          }
+        }
+      },
+      {
+        path: '/product',
+        component: {
+          template: '<div>产品</div>'
+        }
+      },
+      {
+        path: '/about',
+        component: {
+          template: '<div>关于</div>'
+        }
+      }
+    ]
+  });
+
+  console.log(router);
+
+  new Vue({
+    el: '#app',
+    router,
+  })
+</script>
+</html>

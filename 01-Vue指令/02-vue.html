@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{msg}}
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  // 启动一个vue项目
+  // 第一步，引入vue.js文件，第二部，启动vue
+  // 第三步，指定vue工作的范围
+  
+  // vue程序不可以在 body/html 元素身上使用
+  //el表示vue程序工作的范围，值是选择器
+  //  var str = '今天开始学习vue';
+  //  document.getElementById('app').innerHTML = str;
+  new Vue({
+    el: '#app',
+    data: {
+      msg: '今天开始学习vue'
+    }
+  })
+</script>
+</html>

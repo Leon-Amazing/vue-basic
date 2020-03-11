@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  // 使用render函数渲染组件，不需要用Vue.component注册组件
+  // Vue.component()
+  new Vue({
+    el: '#app',
+    // render 函数不适合用于渲染结构很复杂的组件
+    render(createElement) {
+      return createElement('div', {
+        attrs: {
+          id: 'app'
+        }
+      }, [createElement('p', {
+        class: {
+          abc: true
+        },
+        domProps: {
+          innerHTML: '这是内容'
+        }
+      }), createElement('div', {
+        attrs: {
+          title: '这是里面的div'
+        }
+      }, [createElement('h1', '这是标题'), createElement('div', {
+        attrs: {
+          id: 'box'
+        }
+      }, [createElement('p', {
+        class: 'class'
+      }, '这是第三层内容')])])])
+    }
+  })
+</script>
+</html>

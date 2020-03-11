@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <button type="button" v-on:click="show">点击吧</button>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  /**
+   * 事件函数传参，直接在绑定事件的地方加上括号传参即可，不会因为加了括号而直接调用
+   * 没有任何实参的情况下，函数声明的第一个形参默认就是事件对象,
+   * 如果有实参，形参就是实参的值
+   *
+   * 如果需要同时传事件对象和普通的实参，事件对象需要用 $event 来传递，位置无所谓，通常写在第一个实参的位置
+   *
+   * 如果不给事件函数传参或者传一个事件对象：括号可以不写，也可以写
+   *
+   * 如果要传超过1个参数，并且这个参数不是事件对象，括号必须写
+   *
+  */
+
+  new Vue({
+    el: '#app',
+    data: {
+      msg: '123'
+    },
+    methods: {
+      show() {
+        console.log(111);
+      }
+    }
+  })
+</script>
+</html>

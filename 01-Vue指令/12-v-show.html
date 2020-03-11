@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #box {
+      width: 100px;
+      height: 100px;
+      background: red;
+    }
+    .box {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <button type="button" v-on:click="show">切换显示</button>
+    <div id="box" v-show="isShow"></div>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  /**
+   * v-show 条件渲染，根据指令的表达式的返回值来切换元素的显示和隐藏
+  */
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      isShow: false
+    },
+    methods: {
+      show() {
+        vm.isShow = !vm.isShow;
+      }
+    }
+  })
+</script>
+</html>

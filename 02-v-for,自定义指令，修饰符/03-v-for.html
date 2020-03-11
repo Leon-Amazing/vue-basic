@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="(item, i) in arr">{{item}}-----{{i}}</li>
+      <li v-for="(value, key, i) in obj">{{key}}-----{{i}}------{{value}}</li>
+    </ul>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  // let oUl = document.querySelector('ul');
+  // for(let i = 0; i < 5; i++) {
+  //   let oLi = document.createElement('li');
+  //   oLi.innerHTML = i + 1;
+  //   oUl.appendChild(oLi);
+  // }
+
+  /**
+    v-for  用于循环创建元素，需要创建什么元素，就将v-for写在什么元素身上
+    语法：v-for="item in 5"
+  */
+
+  // var arr = [1, 2, 3, 4, 5];
+
+  new Vue({
+    el: '#app',
+    data: {
+      arr: [1,2,3,4,5],
+      obj: {
+        name: '欧阳攀',
+        age: 20,
+        sex: '男',
+        weight: 150
+      }
+    }
+  })
+
+
+
+
+
+
+
+// var getName
+// function getName() {console.log(5)}
+// function Foo() {
+//   getName = function() {console.log(1)};
+//   return this;
+// }
+// Foo.getName = function() {console.log(2)}
+// Foo.prototype.getName = function() {console.log(3)}
+// getName = function() {console.log(4)}
+
+// Foo.getName(); //2
+// getName() // 4
+// Foo().getName(); // 1
+// getName(); // 1
+// new Foo.getName() // 2
+// new Foo().getName(); // 3
+// new new Foo().getName(); // 3
+</script>
+</html>

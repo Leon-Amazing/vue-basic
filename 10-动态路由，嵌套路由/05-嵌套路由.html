@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <router-link to="/home">首页</router-link>
+    <router-link to="/product">产品</router-link>
+    <router-link to="/about">关于</router-link>
+    <router-view></router-view>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vue-router.js"></script>
+<script>
+
+  /**
+    嵌套路由，最外层配置的路由，会渲染在最外层的组件的router-view的位置
+  */
+
+  const home = {
+    template: '<div>这是首页</div>'
+  }
+  const product = {
+    template: `
+      <div>
+        这是产品
+        <router-link to="/product">游戏本</router-link>
+        <router-link to="/product/super">超极本</router-link>
+        <router-link to="/product/ipad">iPad</router-link>
+        <router-view></router-view>
+      </div>`
+  }
+  const about = {
+    template: `
+    <div>
+      这是关于
+      <router-link to="/about/contact">联系方式</router-link>
+      <router-view></router-view>
+    </div>`
+  }
+
+  const contact = {
+    template: '<div>这是联系方式组件</div>'
+  }
+
+  const game = {
+    template: '<div>这是游戏本</div>'
+  }
+  const Super = {
+    template: '<div>这是超极本</div>'
+  }
+  const iPad = {
+    template: '<div>这是iPad</div>'
+  }
+
+  const router = new VueRouter({
+    routes: [
+      {
+        path: '/home',
+        component: home
+      },
+      {
+        path: '/product',
+        // redirect: '/product/game',
+        component: product,
+        // 哪个路由所对应的组件里面有router-view就在哪个路由配置里面写children
+        children: [
+          {
+            // 如果某个父路由的子路由之一，希望默认就要渲染出来，那么可以将这个子路由作为父路由的默认子路由，路径直接写空字符串就行了
+            path: '',
+            component: game
+          },
+          {
+            path: 'super',
+            component: Super
+          },
+          {
+            path: 'ipad',
+            component: iPad
+          }
+        ]
+      },
+      {
+        path: '/about',
+        component: about,
+        children: [
+          {
+            // 子路由的路径一般情况下是相对于父路由的路径嵌套的，写子路由路径的时候不要加上 / 根路径
+            path: 'contact',
+            component: contact
+          }
+        ]
+      }
+    ]
+  });
+
+  new Vue({
+    el: '#app',
+    router
+  })
+</script>
+</html>

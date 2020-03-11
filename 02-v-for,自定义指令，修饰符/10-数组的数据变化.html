@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="msg">
+    <button type="button" v-on:click="send">发表留言</button>
+    <ul>
+      <li contenteditable v-for="item in list">{{item}}</li>
+    </ul>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      msg: '',
+      list: []
+    },
+    methods: {
+      send() {
+        // vm.list[0] = vm.msg;
+        // vm.list.push(vm.msg);
+        // vm.msg = '';
+
+        // 修改数组必须使用能够改变数组本身的方法
+        // push pop shift unshift reverse slice splice sort
+      }
+    }
+  })
+  vm.list[0] = '123';
+  console.log(vm.list)
+</script>
+</html>

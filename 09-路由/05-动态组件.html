@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <a :href="'#/' + item.url" v-for="item in list" @click="change(item.url)">{{item.title}}</a>
+    <component :is="componentName"></component>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  Vue.component('component-a', {
+    template: '<div>我是首页</div>'
+  })
+  Vue.component('component-b', {
+    template: '<div>我是产品</div>'
+  })
+  Vue.component('component-c', {
+    template: '<div>我是关于</div>'
+  })
+
+  new Vue({
+    el: '#app',
+    data: {
+      componentName: 'component-a',
+      list: [
+        {
+          title: '首页',
+          url: 'home'
+        },
+        {
+          title: '产品',
+          url: 'product'
+        },
+        {
+          title: '关于',
+          url: 'about'
+        }
+      ]
+    },
+    methods: {
+      change(url) {
+        switch(url) {
+          case 'home':
+            this.componentName = 'component-a';
+            break;
+          case 'product':
+            this.componentName = 'component-b';
+            break;
+          case 'about':
+            this.componentName = 'component-c';
+            break;
+        }
+      }
+    }
+  })
+</script>
+</html>

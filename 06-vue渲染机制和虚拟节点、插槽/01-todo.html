@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <div class="page-top">
+    <div class="page-content">
+      <h2>任务计划列表</h2>
+    </div>
+  </div>
+  <div class="main">
+    <h3 class="big-title">添加任务：</h3>
+    <input
+      placeholder="例如：吃饭睡觉打豆豆；    提示：+回车即可添加任务"
+      class="task-input"
+      type="text"
+      v-model="title"
+      v-on:keyup.13="onSend"
+    />
+    <ul class="task-count" v-if="list.length > 0">
+      <li>{{unFinishedLength}}个任务未完成</li>
+      <li>
+        <a href="javascirpt:;" class="active" v-on:click="onAll">所有任务</a>
+        <a href="javascirpt:;" v-on:click="onEnCompleted">未完成任务</a>
+        <a href="javascirpt:;" v-on:click="onFinished">已完成任务</a>
+      </li>
+    </ul>
+    <h3 class="big-title">任务列表：</h3>
+    <div class="tasks">
+      <span class="no-task-tip" v-if="list.length == 0">还没有添加任何任务</span>
+      <ul class="todo-list">
+        <li
+          class="todo"
+          v-bind:class="{completed: item.isCompleted, editing: item.isEditing}"
+          v-for="(item, i) in list">
+          <div class="view">
+            <input type="checkbox" class="toggle" v-model="item.isCompleted" />
+            <label v-on:dblclick="onEdit(item.title, i)">{{item.title}}</label>
+            <button class="destroy" v-on:click="onDestroy(i)"></button>
+          </div>
+          <input
+            class="edit"
+            type="text"
+            v-focus="editValue"
+            v-model="editValue"
+            v-on:blur="onCancle(i)"
+            v-on:keyup.enter="onEditabl(i)"
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  Vue.directive('focus', {
+    update(el, binding) {
+      el.focus();
+      // el.select();
+    }
+  });
+  let vm = new Vue({
+    el: '.main',
+    data: {
+      title: '',
+      list: [],
+      editValue: '',
+      filterList: []
+    },
+    computed: {
+      'unFinishedLength': function() {
+        return this.list.filter(item => !item.isCompleted).length
+      }
+    },
+    methods: {
+      onSend() {
+        this.list.push({
+          title: this.title,
+          isCompleted: false,
+          isEditing: false
+        });
+        this.title = '';
+      },
+      onDestroy(i) {
+        this.list.splice(i, 1);
+      },
+      onEdit(title, i) {
+        if(!this.list[i].isCompleted) {
+          this.list[i].isEditing = true;
+          this.editValue = title;
+        }
+      },
+      onEditabl(i) {
+        this.list[i].title = this.editValue;
+        this.list[i].isEditing = false;
+      },
+      onCancle(i) {
+        this.list[i].isEditing = false;
+      },
+      onAll() {
+        console.log(this.filterList);
+        this.list = this.list.concat(this.filterList);
+        for(var i = 0; i < this.list.length; i++) {
+          for(var j = i + 1; j < this.list.length; j++) {
+            if(this.list[i] == this.list[j]) {
+              this.list.splice(j, 1);
+              j--;
+            }
+          }
+        }
+        console.log(this.list);
+      },
+      onEnCompleted() {
+        this.list = this.list.concat(this.filterList);
+        this.list = this.list.filter(item => {
+          if(!item.isCompleted) {
+            return true;
+          } else {
+            this.filterList.push(item);
+          }
+        });
+      },
+      onFinished() {
+        this.list = this.list.concat(this.filterList);
+        this.list = this.list.filter(item => {
+          if(item.isCompleted) {
+            return true;
+          } else {
+            this.filterList.push(item);
+          }
+        });
+      }
+    }
+  })
+</script>
+</html>

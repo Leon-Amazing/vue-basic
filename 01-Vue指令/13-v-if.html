@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #box {
+      width: 100px;
+      height: 100px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <button type="button" v-on:click="show">切换显示</button>
+    <div id="box" v-if="isShow"></div>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  /**
+   * v-if 条件渲染(真 条件渲染)，v-if指令的表达式如果为false，那么绑定了v-if指令的元素会被删除，如果返回值为true，就会重新创建这个元素，并且渲染
+   *
+   * 1、需要频繁切换显示和隐藏： v-show
+   * 2、不需要频繁切换  v-if
+  */
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      isShow: true
+    },
+    methods: {
+      show() {
+        vm.isShow = !vm.isShow;
+      }
+    }
+  })
+</script>
+</html>

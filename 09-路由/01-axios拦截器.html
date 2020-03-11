@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+</body>
+<script src="./axios.min.js"></script>
+<script>
+  const service = axios.create({
+    timeout: 5000,
+    baseURL: 'https://easy-mock.com/mock/5cb58b6c649b1b6121ad40de/Demo'
+  });
+
+  // 请求拦截器
+  // 拦截器在项目中一般用于往请求头里面塞token，token一般用于判断当前用户是否有权限登录
+  service.interceptors.request.use(config => {
+    // if(config.method === 'post') {
+    //   config.headers['content-type'] = 'application/x-www-form-urlencoded';
+    // }
+
+    // config.headers['X-token'] = '123';
+    // 拦截器的回调函数一定要return配置
+    return config;
+  });
+
+  // 响应拦截器
+  service.interceptors.response.use(response => {
+    const status = response.status;
+    if(status === 403) {
+
+    } else if(status === 500) {
+
+    } else if(status === 200){
+      return Promise.resolve(response);
+    }
+  }, error => {
+    return Promise.reject(error);
+  })
+
+  service({
+    url: '/getLoginLog',
+    method: 'post',
+    data: {
+      pageSize: 20,
+      pageIndex: 1
+    }
+  }).then(res => {
+    console.log(res);
+  })
+</script>
+</html>

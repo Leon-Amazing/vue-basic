@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="msg">
+    <p>{{msg}}</p>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  /**
+   * data 是一个对象，对象的属性名和属性值就是这个vue程序的数据，所有的数据都需要写在data对象里面
+   * {{}}  插值表达式，表达式求的值就是双大括号内部的表达式的值
+   * v-model 用于数据的双向绑定，只要其中任意一个发生了改变，那么另外一个也会跟着一起改变
+   * v-model="需要绑定的'变量'"
+  */
+  new Vue({
+    el: '#app',
+    data: {
+      msg: '这是一个msg数据'
+    }
+  });
+</script>
+</html>

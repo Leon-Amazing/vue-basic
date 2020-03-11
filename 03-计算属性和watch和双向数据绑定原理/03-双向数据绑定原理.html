@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+  // 双向数据绑定的核心原理就是使用了 Object.defineProperty()  IE8及以下版本都不支持
+  /**
+    Object.defineProperty(第一个参数，第二个参数，第三个参数);
+    第一个参数：需要操作对象
+    第二个参数：需要操作的属性名
+    第三个参数：json对象   对属性名的描述
+        {
+          value: 需要操作的属性名的属性值,
+          enumerable: 让属性变成是否可枚举的状态，默认是false,
+          writable: 让属性变成是否可以修改属性值，默认是false
+          configurable: 让属性变成是否可删除，默认是false
+        }
+  */
+  // var obj = {
+  //   name: '班长大人',
+  //   age: 18
+  // }
+  // console.dir(obj)
+
+  var obj = {
+    name: '杨幂'
+  }
+  var value = '';
+  var a = Object.defineProperty(obj, 'sex', {
+    // value writable 这两个属性和get set 无法共存
+    enumerable: true,
+    configurable: true,
+    // get函数在属性被访问的时候会调用，函数return的返回值就是属性的属性值
+    get() {
+      console.log('我被访问了');
+      // return 1;
+      return value;
+    },
+    set(val) {
+      value = val;
+      console.log(val);
+      console.log('我被设置了');
+    }
+  });
+</script>
+</html>

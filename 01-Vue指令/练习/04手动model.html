@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="msg">
+        <p>{{msg}}</p>
+      </div>
+</body>
+<script>
+    new MyVue({
+    el: '#app',
+    data: {
+      msg: '这是我自己的写的msg数据，并且能双向绑定'
+    }
+  })
+   
+    function MyVue(json){
+        var oIpt = null;
+        var oP = null;
+        for(var attr in json){
+            if(attr === 'el'){
+                var oDiv = document.querySelector(json[attr]);
+            }
+            if(attr === 'data'){
+                for(var props in json[attr]){
+                    if(props==='msg'){
+                        var children = oDiv.children;
+                        for(var i =0;i<children.length;i++){
+                            if(children[i].getAttribute('v-model') === props){
+                                children[i].value = json[attr][props];
+                                oIpt = children[i];
+                            }
+                            if(children[i].innerHTML.indexOf('msg')!=-1){
+                                children[i].innerHTML = json[attr][props];
+                                oP = children[i];
+                            }
+                        }
+                    }
+                }
+                
+                oIpt.oninput = function(){
+                oP.innerHTML = this.value;
+                }
+            }
+            
+        }
+    }
+</script>
+</html>

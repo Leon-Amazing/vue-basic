@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #app {
+      width: 1000px;
+      margin: 20px auto;
+      clear: both;
+    }
+    li {
+      list-style: none;
+      float: left;
+      border: 1px solid #333;
+      padding: 10px;
+      width: 200px;
+      margin: 0 5px;
+    }
+    .active{
+      border: 1px solid red;
+    }
+    #goCar {
+      float: right;
+      margin-top: 30px;
+    }
+    #pay {
+      margin: 100px 0 500px 450px;
+    }
+   /*第二个组件的*/
+    li {
+      list-style: none;
+    }
+    #car {
+      width: 1000px;
+      margin: 100px auto;
+    }
+    li {
+      padding: 7px 10px;
+    }
+    li input[type=text] {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+    }
+    li button {
+      width: 30px;
+      height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+      <my-good v-on:getchilddata="getData"></my-good>
+      <my-car  v-bind:title="msg"></my-car>
+  </div>
+  <script src="./vue.js"></script>
+
+  <!-- 商品 -->
+  <script type="text/x-template" id="mygoods">
+     <div id="goods">
+        <h3>选购商品</h3>
+        <ul>
+          <li 
+          v-for="(item, i) in list" 
+          v-on:click='light(i)'
+          v-bind:class='{active:item.isLight}'
+          >
+            <img width="200" v-bind:src='item.pictures' alt="">
+            <div>
+              <p>{{item.name}}</p>
+              单价：￥<span>{{item.price}}</span>
+            </div>
+          </li>
+        </ul>
+          <a href="#car" id="goCar"  v-on:click="send">去往购物车</a>
+          <button id="pay">待支付￥<span>5000</span></button>
+          <div id='car'>
+
+          </div>
+   </div>
+  </script>
+  
+   <!-- 购物车 -->
+  <script type="text/x-template" id="myCar">
+    <div id="car">
+        <h1>购物车</h1>
+        <hr />
+        <ul>
+          <li v-for="(item, i) in title">
+            <input type="checkbox" v-model="item.isLight">
+            <span>{{item.name}}</span>
+            单价:
+            <span>{{item.price}}</span>
+            <button type="button" v-on:click="onMinus(i)">-</button>
+            <input type="text" v-model="item.count" v-on:change="onChange(i)">
+            <button type="button" v-on:click="onPlus(i)">+</button>
+            总价:
+            <span>{{item.total}}</span>
+            <button type="button" style="width: 50px;" v-on:click="onDel(i)">删除</button>
+          </li>
+        </ul>
+        <div>
+          <input type="checkbox" id="all" v-model="totalChecked">
+          <label for="all">全选</label>
+          总价:
+          <span style="font-size: 24px;">{{sum}}</span>
+          <button type="button" v-on:click="onAlldel">全部删除</button>
+        </div>
+        {{title}}
+      </div>
+
+  </script>
+
+  <script>
+     let list = [
+       {
+        pictures:'https://res.vmallres.com/pimages//product/6901443293513/428_428_1555464685019mp.png',
+        name:'HUAWEI P10 Pro',
+        price:3099,
+        isLight:false,
+        count:1
+     },
+      {
+        pictures:'https://res.vmallres.com/pimages//product/6901443266425/100_100_1545040924753mp.png',
+        name:'HUAWEI P20 Pro',
+        price:3199,
+        isLight:false,
+        count:1
+     },
+     {
+        pictures:'https://res.vmallres.com/pimages//product/6901443293513/428_428_1555464685019mp.png',
+        name:'HUAWEI P30 Pro',
+        price:3299,
+        isLight:false,
+        count:1
+     },
+     {
+        pictures:'https://res.vmallres.com/pimages//product/6901443266425/100_100_1545040924753mp.png',
+        name:'HUAWEI P40 Pro',
+        price:3399,
+        isLight:false,
+        count:1
+     }];
+
+     Vue.component('my-good',{
+       template:'#mygoods',
+       data(){
+         return {list}
+       },
+       methods:{
+         light(i){
+           list[i].isLight = !list[i].isLight
+         },
+         send(){
+          this.$emit('getchilddata', this.list)
+         }
+       }
+     })
+//   组件二
+     Vue.component('my-car',{
+       template:'#myCar',
+       props: ['title'],
+       data(){
+       	return{
+       		
+       	}
+       }
+//     computed: {
+//    'sum': function() {
+//      // return this.list.reduce((sum, item) => {
+//      //   return sum + item.total
+//      // }, 0)
+//
+//      let sum = 0;
+//      this.list.forEach(item => {
+//        if(item.isLight) {
+//          sum += item.total;
+//        }
+//      })
+//      return sum;
+//    },
+//    'totalChecked': {
+//      get() {
+//        if(this.title.length > 0) {
+//          return this.title.every(item => {
+//            return item.isLight;
+//          });
+//        } else {
+//          return false;
+//        }
+//      },
+//      set(value) {
+//        this.title.forEach(item => {
+//          item.isLight = value;
+//        })
+//      }
+//    }
+//  },
+//  methods: {
+//    onMinus(i) {
+//      if(this.title[i].count > 0) {
+//        this.title[i].count --;
+//        this.title[i].total = this.title[i].count * this.title[i].price;
+//      }
+//      if(this.title[i].count === 0) {
+//        this.title[i].isLight = false;
+//      }
+//    },
+//    onChange(i) {
+//      if(isNaN(parseInt(this.list[i].count))) {
+//        this.title[i].count = 1;
+//      }
+//    },
+//    onPlus(i) {
+//      this.title[i].count ++;
+//      this.title[i].total = this.title[i].count * this.title[i].price;
+//      this.title[i].isLight = true;
+//    },
+//    onDel(i) {
+//      this.title.splice(i, 1);
+//    },
+//    onAlldel() {
+//      this.title = this.title.filter(item => {
+//        return !item.isLight
+//      });
+//    }
+//  }
+})
+     new Vue({
+       el:'#app',
+       data:{
+       	msg:''
+       },
+       methods:{
+         getData(value){
+         	this.msg = value
+         	console.log(this.msg)
+         }
+       }
+     })
+  </script>
+</body>
+</html>

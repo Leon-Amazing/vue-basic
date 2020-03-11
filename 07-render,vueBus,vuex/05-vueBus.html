@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <my-dd></my-dd>
+    <my-gg></my-gg>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  // 非父子组件之间通信太过复杂，某些简单的场景下，可以使用 VueBus
+
+  const Bus = new Vue();
+
+  Vue.component('my-dd', {
+    template: '<div><button type="button" v-on:click="clickHandle">+</button></div>',
+    data() {
+      return {
+        msg: '班长大人'
+      }
+    },
+    methods: {
+      clickHandle() {
+        Bus.$emit('send', this.msg);
+      }
+    }
+  });
+  Vue.component('my-gg', {
+    template: '<div>hello，{{msg}}</div>',
+    data() {
+      return {
+        msg: ''
+      }
+    },
+    beforeMount() {
+      Bus.$on('send', (val) => {
+        this.msg = val;
+      })
+    }
+  });
+
+  new Vue({
+    el: '#app'
+  })
+</script>
+</html>

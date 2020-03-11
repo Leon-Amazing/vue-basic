@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{msg}}
+    <my-son v-on:getchilddata="getData"></my-son>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  /**
+   * 子组件 => 父组件
+   *    1、在子组件的标签名上自定义一个事件
+   *    2、在子组件内定义一个原生事件，在子组件这个事件的事件函数内使用 $emit()
+   *    3、this.$emit(父组件监听的自定义事件的事件名, ...需要传递给父组件的数据)
+   *    父组件自定义事件的事件函数就会接收到子组件通过$emit()传过去的数据
+  */
+  Vue.component('my-son', {
+    template: '<div><button type="button" v-on:click="show">点击</button></div>',
+    data() {
+      return {
+        childValue: '子组件数据'
+      }
+    },
+    methods: {
+      show() {
+        //alert(this.childValue);
+        this.$emit('getchilddata', this.childValue)
+      }
+    }
+  })
+
+  new Vue({
+    el: '#app',
+    data: {
+      msg: '这是父组件自身的数据'
+    },
+    methods: {
+      getData(val) {
+        alert(val);
+      }
+    }
+  })
+</script>
+</html>

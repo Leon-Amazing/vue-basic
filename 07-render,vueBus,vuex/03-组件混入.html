@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{msg}}
+    <my-dd v-bind:msg="msg" v-on:add="onAdd" v-slot>
+      <template slot-scope>
+        这是标签内的数据
+      </template>
+    </my-dd>
+    <my-gg v-bind:msg="msg" v-on:add="onAdd"></my-gg>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  // Vue.component('my-app', {
+  //   template: '<div>111111</div>'
+  // })
+
+  const mm = {
+    template: '<div><input type="text" v-model="msg" /><button type="button" v-on:click="clickHandle">+</button><slot></slot></div>',
+    props: ['msg'],
+    methods: {
+      clickHandle() {
+        this.$emit('add')
+      }
+    }
+  }
+
+  // mixins:  用于将组件相同的选项对象提取出来到一个对象里面，利用 混入(mixins) 将提取出来的对象重复利用，提取出来的公共部分一定要保证混入的组件是完全一样的功能
+  const myDDComponent = {
+    mixins: [mm]
+  }
+
+  const myGGComponent = {
+    mixins: [mm],
+    // props: {
+    //   msg: String
+    // },
+    // 如果组件内部与 混入(mixins) 的对象里面有相同的部分，直接使用组件内部，而混入的对象里面会被无视掉(就近原则)
+    methods: {
+      clickHandle() {
+        alert(22222);
+      }
+    }
+  }
+
+  new Vue({
+    el: '#app',
+    data: {
+      msg: 1
+    },
+    components: {
+      'my-dd': myDDComponent,
+      'my-gg': myGGComponent
+    },
+    methods: {
+      onAdd() {
+        this.msg = ++this.msg
+      }
+    }
+  })
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    价格：
+    <input type="text" v-model="price">
+    *
+    数量：
+    <input type="text" v-model="count">
+    =
+    总价：
+    <input type="text" v-model="total" disabled>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      price: 0,
+      count: 0,
+      // total: 0
+    },
+    computed: {
+      // 计算属性监听的属性名不能与data对象里面的属性同名
+      // 计算属性可以理解为 Object.defineProperty() 的get函数
+      // 计算属性监听的属性名，就是经过运算之后的返回值的结果
+      // 如果一个数据的值会受到另外的数据的变化而变化，那么就应该写成计算属性
+      'total': function() {
+        return this.price * this.count;
+      }
+    }
+    // watch: {
+    //   'price': function(newValue, oldValue) {
+    //     vm.total = vm.count * newValue;
+    //   },
+    //   'count': function(val) {
+    //     vm.total = vm.price * val;
+    //   }
+    // }
+  })
+</script>
+</html>

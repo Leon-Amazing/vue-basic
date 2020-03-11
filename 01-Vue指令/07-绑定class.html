@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box {
+      height: 100px;
+      width: 100px;
+      background: pink;
+    }
+    .box2 {
+      height: 100px;
+      width: 100px;
+      /* background: red; */
+      color: #fff;
+      border: 5px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="abc" v-bind:class="['box', {box2: Math.random() > 0.5}]">这是文字</div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  /**
+   * v-bind:class="基础表达式"  v-bind:class="msg"
+   * v-bind:class="三目运算符表达式"  v-bind:class="Math.random() > 0.5 ? 'box' : 'box2'"
+   * v-bind:class="[类名一，类名二， 。。。。。]" v-bind:class="['box', 'box2']"   v-bind:class="[msg, 'box2']"
+   * v-bind:class="{类名: 表达式}" 表达式返回值为true就给元素添加该类名，否则就不添加  v-bind:class="{box: Math.random() > 0.5}"
+  */
+
+  new Vue({
+    el: '#app',
+    data: {
+      msg: 'box'
+    }
+  })
+
+</script>
+</html>

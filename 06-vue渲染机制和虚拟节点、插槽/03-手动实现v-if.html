@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button type="button">切换</button>
+  <div id="app">
+    <div id="box1">
+      <p>1111111111</p>
+    </div>
+    <div id="box2">
+      <p>2222222222</p>
+    </div>
+  </div>
+</body>
+<script>
+  const oBtn = document.querySelector('button');
+  let flag = true;
+
+  /**
+    为了节省性能开支，利用虚拟节点与真实节点进行对比，查找有哪些地方不同，对于不同的地方用最小的消耗(DOM操作)进行视图更新
+
+    虚拟节点就是一个描述DOM树结构的json对象
+  */
+  oBtn.addEventListener('click', function() {
+    document.body.removeChild(document.querySelector('#app'));
+    const oRootDiv = document.createElement('div');
+    oRootDiv.id = 'app';
+    document.body.appendChild(oRootDiv);
+    if(flag) {
+      const oBox1 = document.createElement('div');
+      oBox1.id = 'box1';
+      const oP1 = document.createElement('p');
+      oP1.innerText = '1111111111';
+      oBox1.appendChild(oP1);
+      oRootDiv.appendChild(oBox1);
+    } else {
+      const oBox2 = document.createElement('div');
+      oBox2.id = 'box2';
+      const oP2 = document.createElement('p');
+      oP2.innerText = '2222222222';
+      oBox2.appendChild(oP2);
+      oRootDiv.appendChild(oBox2);
+    }
+    flag = !flag;
+  })
+</script>
+</html>

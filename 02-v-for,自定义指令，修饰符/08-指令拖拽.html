@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #box {
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="box" v-my-drag.y></div>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  // var oBox = document.querySelector('#box');
+  // oBox.onmousedown = function(ev) {
+  //   var disX = ev.clientX - this.offsetLeft;
+  //   var disY = ev.clientY - this.offsetTop;
+  //   document.onmousemove = function(ev) {
+  //     var L = ev.clientX - disX;
+  //     var T = ev.clientY - disY;
+  //     oBox.style.left = L + 'px';
+  //     oBox.style.top = T + 'px';
+  //   }
+  //   document.onmouseup = function() {
+  //     document.onmousemove = null;
+  //     document.onmouseup = null;
+  //   }
+  // }
+
+  // 注册指令，全局指令
+  Vue.directive('my-drag', {
+    bind(el, binding) {
+      el.onmousedown = function(ev) {
+        var disX = ev.clientX - this.offsetLeft;
+        var disY = ev.clientY - this.offsetTop;
+        document.onmousemove = function(ev) {
+          var L = ev.clientX - disX;
+          var T = ev.clientY - disY;
+          if(binding.modifiers['x']) {
+            el.style.left = L + 'px';
+            el.style.top = '0px';
+          } else if(binding.modifiers['y']) {
+            el.style.left = '0px';
+            el.style.top = T + 'px';
+          } else {
+            el.style.left = L + 'px';
+            el.style.top = T + 'px';
+          }
+        }
+        document.onmouseup = function() {
+          document.onmousemove = null;
+          document.onmouseup = null;
+        }
+      }
+    }
+  });
+
+  new Vue({
+    el: '#app'
+  })
+</script>
+</html>

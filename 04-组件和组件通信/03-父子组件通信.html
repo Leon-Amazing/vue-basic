@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{value}}
+    <my-app v-bind:title="value" abc="123"></my-app>
+    <!-- <myApp></myApp> -->
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  /**
+    组件注册完成之后，直接当成标签使用即可，组件名命名的时候注意：
+    1、不要用单个单词。
+    2、不要与现有的HTML标签重名
+    3、最好是两个或者两个以上的单词组成，每个单词中间用 - 隔开，也可以写成驼峰命名
+  */
+
+  /**
+    父子组件之间通信：
+       父组件 => 子组件   在子组件的标签名上添加自定义属性，并且用v-bind绑定，如果不绑定，那么属性只能传字符串，在子组件的选项(配置)对象，添加一个 props 属性，这个props是一个数组，这个数组的元素的内容就是绑定的自定义属性的属性名
+  */
+  Vue.component('myApp', {
+    template: "<div>{{msg}}-------{{title}}{{abc}}</div>",
+    props: ['title', 'abc', 'aTitle'],
+    data() {
+      return {
+        msg: "子组件数据"
+      }
+    }
+  });
+
+  new Vue({
+    el: '#app',
+    data: {
+      value: '父组件的数据'
+    }
+  })
+</script>
+</html>

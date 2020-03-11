@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .my-message {
+      margin: 100px auto;
+      width: 25%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      line-height: 1;
+      padding: 15px 15px 15px 20px;
+      clear: both;
+      font-size: 14px;
+    }
+    .my-message .close {
+      float: right;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: -3px;
+    }
+    .my-message--success {
+      background: #f0f9eb;
+      border-color: #f0f9eb;
+    }
+    .my-message--waring {
+      background: #e6a23c;
+      border-color: #e6a23c;
+    }
+    .my-message--info {
+      background: #909399;
+      border-color: #909399;
+    }
+    .my-message--error {
+      background: #f56c6c;
+      border-color: #f56c6c;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <button type="button" v-on:click="success">成功</button>
+    <button type="button" v-on:click="waring">警告</button>
+    <button type="button" v-on:click="info">消息</button>
+    <button type="button" v-on:click="error">错误</button>
+
+    <my-message v-on:close="close" v-bind:visibility="visibility" v-bind:type="type" v-slot>{{msg}}</my-message>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  Vue.component('my-message', {
+    template: `
+      <div v-if="visibility" class="my-message" v-bind:class="'my-message--' + type">
+        <span><slot></slot></span>
+        <span class="close" v-on:click="closeHandle">&times;</span>
+      </div>
+    `,
+    props: {
+      type: {
+        type: String
+      },
+      visibility: {
+        type: Boolean,
+        default: false
+      }
+    },
+    methods: {
+      closeHandle() {
+        this.$emit('close');
+      }
+    }
+  })
+  new Vue({
+    el: '#app',
+    data: {
+      visibility: false,
+      type: 'success',
+      msg: '成功啦'
+    },
+    methods: {
+      success() {
+        this.visibility = true;
+        this.type = 'success';
+        this.msg = '成功';
+      },
+      waring() {
+        this.visibility = true;
+        this.type = 'waring';
+        this.msg = '警告';
+      },
+      info() {
+        this.visibility = true;
+        this.type = 'info';
+        this.msg = '信息';
+      },
+      error() {
+        this.visibility = true;
+        this.type = 'error';
+        this.msg = '错误';
+      },
+      close() {
+        this.visibility = false;
+      }
+    }
+  })
+</script>
+</html>

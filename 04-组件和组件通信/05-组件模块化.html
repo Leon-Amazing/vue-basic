@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <my-app title="父组件给的数据"></my-app>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script type="text/x-template" id="template">
+  <div>
+    111111
+    {{title}}
+  </div>
+</script>
+<script>
+  /**
+   * 将整个template模板提取出来，写在一个script标签内，这个script要写两条属性 type="text/x-template" id="component"
+  */
+  Vue.component('my-app', {
+    template: '#template',
+    props: ['title']
+  });
+  new Vue({
+    el: '#app'
+  })
+</script>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      box-sizing: border-box;
+    }
+    #wrap {
+      width: 1000px;
+      margin: 100px auto;
+    }
+    #wrap p span {
+      display: inline-block;
+      padding: 7px 40px 7px 5px;
+      border: 2px solid #dbdbdb;
+      position: relative;
+      margin-right: 20px;
+    }
+    #wrap p {
+      height: 39px;
+    }
+    #wrap p span:after {
+      content: 'x';
+      height: 37px;
+      width: 30px;
+      text-align: center;
+      background: #ccc;
+      position: absolute;
+      right: 0;
+      cursor: pointer;
+      font-size: 20px;
+      top: 0;
+    }
+    li {
+      padding: 7px 10px;
+    }
+    li b {
+      letter-spacing: 2em;
+    }
+    li:nth-of-type(4) b {
+      letter-spacing: 0;
+      margin-right: 30px;
+    }
+    li span {
+      display: inline-block;
+      padding: 5px 15px;
+      cursor: pointer;
+    }
+    li span.active {
+      color: blue;
+    }
+    li span:hover {
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="wrap">
+      <p>
+        <span v-for="(item, key) in checkedList" v-on:click="del(key)">{{item}}</span>
+      </p>
+      <ul>
+        <li v-for="(item, i) in list">
+          <b>{{item.title}}</b>
+          <span
+            v-for="(child, j) in item.data"
+            v-bind:class="{active: child.isChecked}"
+            v-on:click="onFilterProduct(child, i, j)"
+          >{{child.value}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  let list = [
+    {
+      title: '品牌',
+      data: [
+        '华硕',
+        '戴尔',
+        '惠普',
+        '华为',
+        '小米',
+        '弘基',
+        '神舟',
+        '三星'
+      ]
+    },
+    {
+      title: '价格',
+      data: ['0-3999', '4000-4499', '4500-4999', '5000-5499', '5500-5999', '6000以上']
+    },
+    {
+      title: '分类',
+      data: ['游戏本', '轻薄本', '二合一笔记本', '常规笔记本', '加固笔记本']
+    },
+    {
+      title: '屏幕尺寸',
+      data: ['11英寸及以下', '11.6英寸', '14.1英寸', '15.0英寸', '15.4英寸', '16.1英寸', '17.3英寸']
+    },
+    {
+      title: '处理',
+      data: ['i3', 'i5', 'i7', 'i9', 'AMD']
+    }
+  ];
+
+  list.forEach(item => {
+    item.data = item.data.map(child => {
+      // Object.assign 合并对象，返回一个新对象
+      // Object.assign(第一个参数，...第二个参数)
+      /**
+        第一个参数：要合并的目标对象
+        ...第二个参数：源对象
+      */
+      return Object.assign({}, {value: child, isChecked: false});
+    })
+  })
+
+  console.log(list);
+
+  new Vue({
+    el: '#app',
+    data: {
+      list,
+      checkedList: {}
+    },
+    methods: {
+      onFilterProduct(child, i, j) {
+        this.list[i].data.forEach(item => {
+          item.isChecked = false;
+        });
+        this.list[i].data[j].isChecked = true;
+        this.$set(this.checkedList, i, child.value)
+      },
+      del(key) {
+        this.list[key].data.forEach(item => {
+          item.isChecked = false;
+        });
+        // this.$delete Vue中动态删除对象属性的函数
+        // 第一个参数是要删除的目标对象，第二个参数是要删除的目标对象的属性名
+        this.$delete(this.checkedList, key);
+      }
+    }
+  })
+</script>
+</html>

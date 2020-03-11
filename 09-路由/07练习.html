@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+      .router-link-active{
+          color: aqua;
+      }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <router-link :to = '{mame:abc}'>首页</router-link>
+        <router-link to = '/product'>产品</router-link>
+        <router-link to = '/about'>关于</router-link>
+        <router-view></router-view>
+    </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vue-router.js"></script>
+<script>
+    const router = new VueRouter({
+        routes:[
+            {
+                path:'/home',
+                alias:'/index',
+                name:'abc',
+                component:{
+                    template:'<div>首页的内容</div>'
+                }
+            },
+            {
+                path:'/product',
+                component:{
+                    template:'<div>产品的内容</div>'
+                }
+            },
+            {
+                path:'/about',
+                component:{
+                    template:'<div>关于的内容</div>'
+                }
+            },
+        ]
+    })
+
+    new Vue({
+        el:'#app',
+        router
+    })
+</script>
+</html>

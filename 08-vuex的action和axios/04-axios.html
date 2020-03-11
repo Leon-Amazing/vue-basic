@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+<script src="./vue.js"></script>
+<script src="./axios.min.js"></script>
+<script>
+
+  // axios.get('./1.get.php', {
+  //   params: {
+  //     username: '学习委员'
+  //   }
+  // }).then(res => {
+  //   console.log(res);
+  // })
+
+  // axios.get('./1.get.php?username=学习委员')
+  // .then(res => {
+  //   console.log(res);
+  // })
+var CancelToken = axios.CancelToken;
+console.log(axios.CancelToken);
+var cancel;
+
+axios.get('/user/12345', {
+  cancelToken: new CancelToken(function executor(c) {
+    // executor 函数接收一个 cancel 函数作为参数
+    console.dir(c);
+    cancel = c;
+  })
+});
+
+// 取消请求
+cancel();
+console.log(cancel);
+  new Vue({
+    el: '#app'
+  })
+</script>
+</html>

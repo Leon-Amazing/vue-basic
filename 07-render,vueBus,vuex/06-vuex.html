@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{msg}}
+    <my-app></my-app>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vuex.js"></script>
+<script>
+  // Vuex 是一个专门为Vue.js开发的状态管理器(数据管理器)插件，采用集中式存储管理所有组件的状态(数据)，并且以相应的规则、一定的可预测的方式发生变化
+
+  /**
+   * 1、引入(安装)Vuex插件
+   * 2、实例化插件(创建容器)
+   * 3、给容器添加数据，数据写在传入Store构造函数的选项对象的state属性里面，state的属性值是一个对象
+   * 4、注入容器
+  */
+  const store = new Vuex.Store({
+    state: {
+      num: 1
+    }
+  });
+
+  // var $store = {
+  //   state: {
+  //     num: 200
+  //   }
+  // }
+
+  // 根组件的所有后代组件都可以直接通过this访问到容器store
+  Vue.component('my-app', {
+    template: '<div>{{num}}</div>',
+    computed: {
+      'num': function() {
+        console.log(this);
+        return this.$store.state.num;
+      }
+    }
+  })
+
+  let vm = new Vue({
+    el: '#app',
+    store,
+    // data对象里面的this指向window
+    // data: {
+    //   msg: vm.$store.state.num
+    // }
+
+    // 访问store容器里面的数据，必须使用计算属性
+    computed: {
+      'msg': function() {
+        return this.$store.state.num;
+      }
+    }
+  });
+  // console.log(vm);
+</script>
+</html>

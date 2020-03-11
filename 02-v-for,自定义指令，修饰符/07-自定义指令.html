@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model.number="msg">
+    {{msg}}
+    <input type="text" v-my-model.x.y>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  Vue.directive('my-model', {
+    bind(el, binding) {
+      console.log(binding);
+      el.addEventListener('keypress', function() {
+        if(binding.modifiers['x']) {
+
+        }
+      });
+    }
+  });
+
+  new Vue({
+    el: '#app',
+    data: {
+      msg: ''
+    }
+  })
+</script>
+</html>

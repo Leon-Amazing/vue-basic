@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- router-link 路由用于点击的时候通过to属性匹配路径，到指定的路由，并且渲染出路由所指定的组件 -->
+    <!-- <router-link :to="pathName">首页</router-link> -->
+    <!-- tag可以用于修改router-link渲染出来的标签名 -->
+    <router-link :to="{path: '/home'}" tag="div" event="mouseover">首页</router-link>
+    <router-link to="/product">产品</router-link>
+    <router-link to="/about">关于</router-link>
+    <router-view></router-view>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vue-router.js"></script>
+<script>
+
+  const router = new VueRouter({
+    // mode: 'history',
+    routes: [
+      {
+        // path 用来与地址进行匹配的路径，只有匹配到了才显示路由对应的组件
+        path: '/home',
+        component: {
+          template: '<div>首页</div>'
+        }
+      },
+      {
+        path: '/product',
+        component: {
+          template: '<div>产品</div>'
+        }
+      },
+      {
+        path: '/about',
+        component: {
+          template: '<div>关于</div>'
+        }
+      }
+    ]
+  });
+
+  new Vue({
+    el: '#app',
+    router,
+    data: {
+      pathName: '/home'
+    }
+  })
+
+</script>
+</html>

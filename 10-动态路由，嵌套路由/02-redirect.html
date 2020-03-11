@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <router-link :to="{name: 'abc'}">首页</router-link>
+    <router-link to="/product">产品</router-link>
+    <router-link to="/about">关于</router-link>
+    <router-view></router-view>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vue-router.js"></script>
+<script>
+
+  const router = new VueRouter({
+    routes: [
+      {
+        // path: '/' 将根路径作为某个路由的路径，一般都是首页
+        path: '/home',
+        // redirect: '/home',
+        name: 'abc',
+        alias: '/index',
+        meta: {
+
+        },
+        component: {
+          template: '<div>这是首页内容</div>'
+        }
+      },
+      {
+        path: '/product',
+        component: {
+          template: '<div>这是产品内容</div>'
+        }
+      },
+      {
+        path: '/about',
+        component: {
+          template: '<div>这是关于内容</div>'
+        }
+      },
+      {
+        path: '/',
+        // 重定向，将路径重新修改到指定的新的路由路径上
+        // redirect: '/home',
+        redirect() {
+          return '/home'
+        }
+      },
+      {
+        // * 通配符，只要任何一个不符合以上所有的路由配置的路径
+        // 通配符配置的路由，一定要写，并且要写在所有路由配置的最后面
+        path: '*',
+        redirect: '/about'
+      }
+    ]
+  })
+
+  new Vue({
+    el: '#app',
+    router
+  })
+
+</script>
+</html>

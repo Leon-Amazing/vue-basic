@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{num}}
+    <my-dd v-on:add="add" v-on:send="send"></my-dd>
+    <my-gg v-on:add="add" v-bind:temp="temp"></my-gg>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  Vue.component('my-dd', {
+    template: '<div><input type="text" v-model="aNum" v-on:input="onInput" /><button type="button" v-on:click="clickHandle">+</button></div>',
+    data() {
+      return {
+        aNum: 1
+      }
+    },
+    methods: {
+      clickHandle() {
+        this.$emit('add', +this.aNum);
+      },
+      onInput() {
+        this.$emit('send', +this.aNum);
+      }
+    }
+  });
+  Vue.component('my-gg', {
+    template: '<div><input type="text" v-model="temp" /><button type="button" v-on:click="clickHandle">+</button></div>',
+    props: ['temp'],
+    data() {
+      return {
+        aNum: 1
+      }
+    },
+    methods: {
+      clickHandle() {
+        this.$emit('add', +this.temp);
+      }
+    }
+  });
+
+  new Vue({
+    el: '#app',
+    data: {
+      num: 1,
+      temp: 1
+    },
+    methods: {
+      add(val) {
+        this.num = this.num + val;
+      },
+      send(val) {
+        this.temp = val;
+      }
+    }
+  })
+</script>
+</html>

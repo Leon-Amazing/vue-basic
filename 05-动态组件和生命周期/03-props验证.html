@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <my-app v-bind:value="msg"></my-app>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  /**
+    某些情况下，父组件传递给子组件的数据需要检测数据类型
+
+    props: {
+      value: {
+        // 规定数据类型
+        type: Number // 可以写多个类型，多个类型需要写进数组里面
+      }
+    }
+  */
+  Vue.component("my-app", {
+    template: '<div>{{value * value}}</div>',
+    // props: ['value']
+    props: {
+      // 只验证单个数据类型
+      value: Number,
+
+      // 能验证多个数据类型
+      // value: [Number, String]
+
+      // 带有默认值，并且验证了数据类型
+      // value: {
+      //   type: Number,
+      //   default: 10
+      // }
+
+      // 使用者必须传这个数据
+      // value: {
+      //   type: Number,
+      //   required: true
+      // }
+
+      // 如果默认值是 对象或者数组 那么，default 必须是一个函数，并且返回一个默认的 对象或者数组
+      // value: {
+      //   type: Object,
+      //   default() {
+      //     return {}
+      //   }
+      // }
+
+      // validator 自定义验证函数
+      // value: {
+      //   validator(val) {
+      //     if(val < 10) {
+      //       throw Error('value is must be > 10');
+      //     }
+      //   }
+      // }
+    }
+  })
+  new Vue({
+    el: '#app',
+    data: {
+      msg: 1
+    }
+  })
+</script>
+</html>

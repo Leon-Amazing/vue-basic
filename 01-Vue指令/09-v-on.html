@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <button type="button" v-on:click="show">点击吧</button>
+    {{msg}}
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  // addEventListener('click')
+  // document.getElementsByTagName('button')[0].onclick = function(){alert(1)}
+
+  /**
+   * 所有的data对象的属性，统统会被 Vue 实例 vm 挂载
+   * data 对象可以写函数，不要这样写
+   *
+   * 所有的自定义函数，都应该写在 methods 对象里面。
+   * methods 对象的所有函数都会挂载到Vue实例身上
+   * 自定义函数的函数名，不要和系统自带的函数名重名
+  */
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      msg: '123',
+      abc: '456'
+    },
+    methods: {
+      show() {
+        console.log(1);
+      }
+    }
+  })
+
+</script>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    /* .router-link-active {
+      color: red;
+    } */
+    /* .is-active {
+      color: red;
+    } */
+    .router-link-active{
+      background: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!--
+      router-link 代替 a 标签实现地址切换效果，跳转不同的路由(渲染不同的组件)
+      router-link 是VueRouter插件提供的组件
+      to: 指定当前导航跳转到某个路由，路由的路径
+      tag: 修改router-link渲染的标签，默认是 a 标签
+      event: 修改触发导航跳转效果的事件形式，默认是点击事件
+
+      router-link-active 用于配置导航栏高亮效果
+    -->
+    <router-link to="/home" >首页</router-link>
+    <router-link :to="pathName">产品</router-link>
+    <router-link :to="{path: '/about'}">关于</router-link>
+    <router-view></router-view>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vue-router.js"></script>
+<script>
+
+  const router = new VueRouter({
+    // linkActiveClass 修改默认激活导航的类名
+   linkActiveClass: 'is-active',
+    routes: [
+      {
+        path: '/home',
+        component: {
+          template: '<div>这是首页内容</div>'
+        }
+      },
+      {
+        path: '/product',
+        component: {
+          template: '<div>这是产品内容</div>'
+        }
+      },
+      {
+        path: '/about',
+        component: {
+          template: '<div>这是关于内容</div>'
+        }
+      }
+    ]
+  });
+
+  new Vue({
+    el: '#app',
+    router,
+    data: {
+      pathName: '/product'
+    }
+  })
+</script>
+</html>

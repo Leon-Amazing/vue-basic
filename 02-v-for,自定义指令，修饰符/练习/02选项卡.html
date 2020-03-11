@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+    	#app div{
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+        #app .active{
+            background: pink;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button v-bind:class='{active:i===index}'v-for='(item,i) in btnList' v-on:click='tab(i)'>{{item}}</button>
+        <div v-show='i===index' v-for='(item,i) in contentList'>{{item}}</div>
+    </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+  var vm =  new Vue({
+       el:'#app',
+       data:{
+           btnList:['111','222','333'],
+           contentList:['我是1的内容','我是2的内容','我是3的内容'],
+           index:0
+       },
+       methods:{
+          tab(index){
+              vm.index = index
+          }
+       }
+   })
+</script>
+</html>

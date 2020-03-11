@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">{{msg}}</div>
+</body>
+<script>
+new MyVue({
+    el:'#app',
+    data:{
+        msg:'手动写Vue'
+    }
+})
+
+function MyVue(json){
+    for(atrr in json){
+        if(atrr == 'el'){
+            oDiv = document.getElementById(json[atrr].slice(1));
+        }
+        if(atrr == 'data'){
+            for(props in json[atrr]){
+             oDiv.innerHTML=json[atrr][props]
+            }
+        }
+    }
+}
+</script>
+</html>

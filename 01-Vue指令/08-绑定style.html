@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <div id="app" v-bind:style="{height: '100px', width: '100px', background: 'red'}"></!-->
+  <div id="app" v-bind:style="[styleObject, styleObject2]">
+    <img v-bind:src="picSrc" alt="">
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  /**
+   * v-bind:style="{height: '100px', width: '100px', background: 'red'}" 不常用，还不如直接写行间样式
+   * v-bind:style="[样式对象1, 样式对象2]"
+   *
+  */
+  new Vue({
+    el: '#app',
+    data: {
+      styleObject: {
+        height: '100px',
+        width: '100px',
+        background: 'red'
+      },
+      styleObject2: {
+        border: '4px solid #ccc',
+        borderRadius: '6px'
+      },
+      picSrc: 'http://img5.imgtn.bdimg.com/it/u=1596790215,4132785552&fm=26&gp=0.jpg'
+    }
+  })
+</script>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #box1 {
+      width: 200px;
+      height: 200px;
+      /* background: red; */
+    }
+    #box2 {
+      width: 100px;
+      height: 100px;
+      background: black;
+      position: absolute;
+      left: 300px;
+    }
+    /* #app {
+      height: 200px;
+      overflow: auto;
+    } */
+  </style>
+</head>
+<body>
+  <div id="app" v-on:scroll="onScroll">
+    <!-- <input type="text" v-model.lazy="msg"> -->
+    <!-- <input type="text" v-model.number="msg"> -->
+    <!-- <input type="text" v-model.trim="msg" v-on:input="input"> -->
+    <!-- <div id="box1" v-on:click.self="show1">
+      <div id="box2" v-on:click.once="show2"></div>
+    </div>
+    <a href="http://www.baidu.com" v-on:click.prevent="show3">跳转</a>
+    {{msg}} -->
+
+    <input type="text" v-on:keypress.enter="onKeyPress">
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+  /**
+    修饰符：
+      表单修饰符：
+          1、lazy
+              将v-model默认的input事件，转换成change事件
+          2、number
+              将用户输入的内容转换成数字，如果转不了就不会发生任何变化
+          3、trim
+              去除用户输入的内容头尾空白字符
+      事件修饰符
+          1、stop
+              阻止事件冒泡，已经做过兼容，不需要考虑IE
+          2、prevent
+              阻止默认事件
+          3、capture
+              事件捕获
+          4、self
+              只有事件源是绑定的元素本身的时候才会触发事件函数
+          5、once
+              事件函数只会触发一次
+          6、passive
+              让滚动事件的默认行为立即触发
+      按键修饰符
+          1、enter
+              按下回车键
+            .
+            .
+            .
+  */
+
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      msg: ''
+    },
+    methods: {
+      input() {
+        console.log(vm.msg)
+      },
+      show() {
+        alert(0)
+      },
+      show1() {
+        alert(1);
+      },
+      show2() {
+        alert(2);
+      },
+      show3() {
+        alert(1);
+      },
+      onScroll() {
+        console.log(11)
+      },
+      onKeyPress(ev) {
+        console.log('回车');
+      }
+    }
+  })
+</script>
+</html>

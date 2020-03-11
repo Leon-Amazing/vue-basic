@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{a}}
+    <input type="text" v-model="msg">
+    <button type="button" v-on:click="send">发表</button>
+    <ul>
+      <li v-for="item in list">{{item}}</li>
+    </ul>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vuex.js"></script>
+<script>
+
+  const store = new Vuex.Store({
+    state: {
+      arr: []
+    },
+    mutations: {
+      add(state, val) {
+        // 下标修改数组的数据无法实现响应式
+        // state.arr[0] = val;
+        state.arr.push(val);
+        Vue.set(state, 'a', 1);
+      }
+    }
+  })
+
+  new Vue({
+    el: '#app',
+    store,
+    data: {
+      msg: ''
+    },
+    computed: {
+      'list': function() {
+        return this.$store.state.arr;
+      },
+      'a': function() {
+        return this.$store.state.a;
+      }
+    },
+    methods: {
+      send() {
+        this.$store.commit('add', this.msg);
+      }
+    }
+  })
+</script>
+</html>

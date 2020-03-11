@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{msg}}
+    <my-app v-bind:msg="abc"></my-app>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  // new Vue({
+  //   el: '#app',
+  //   data: {
+  //     msg: '1'
+  //   }
+  // })
+
+  // let vm = new Vue({
+  //   data: {
+  //     msg: 1
+  //   }
+  // }).$mount('#app');
+  // vm.$mount('#app')
+
+  // 如果初始化Vue的时候有template属性，那么编译的模板会直接使用template 模板
+  // new Vue({
+  //   el: '#app',
+  //   data: {
+  //     msg: 1
+  //   },
+  //   template: '<div id="box">{{msg}}</div>'
+  // })
+
+  new Vue({
+    el: '#app',
+    data: {
+      msg: 1,
+      abc: 2222
+    },
+    // render 函数，用来代替字符串模板，函数接收唯一参数 createElement
+    // createElement 也是一个函数，接收最多三个参数 createElement(第一个参数, ...参数)
+    // 第一个参数：直接写需要创建的模板的根元素标签名
+    // 第二个参数：如果模板根元素没有任何属性，并且组件也不需要接收任何数据，那么第二个参数可以直接作为模板根元素的内容。如果模板根元素有属性，那么第二个参数只能是对象
+    render(createElement) {
+      // console.log(createElement('div', '111111'));//VNode
+      // return createElement('div', '111111')
+
+      return createElement('div', {
+        attrs: {
+          id: 'box',
+          title: '这是div的title',
+          abc: '这是自定义属性'
+          // class 和 style 属性可以写在 attrs 对象里面，style添加的样式属于行间样式
+          // class: 'class',
+          // style: 'background: red;'
+        },
+        // class: {
+        //   a: true
+        // },
+        // class: ['a', {
+        //   b: true,
+        //   c: true
+        // }],
+
+        // style: 'background: red; color: #fff;',
+        // style: {
+        //   background: 'red',
+        //   color: '#fff'
+        // },
+        // style: [{background: 'red'}, {color: '#fff'}],
+        // 如果第二个参数是对象，那么根元素的内容只能写在 domProps 对象里面
+        domProps: {
+          innerHTML: '<p>这是里面P</p>'
+        },
+        on: {
+          click: this.clickHandle
+        }
+      })
+    },
+    methods: {
+      clickHandle(ev) {
+        console.log(ev);
+      }
+    }
+  })
+</script>
+</html>

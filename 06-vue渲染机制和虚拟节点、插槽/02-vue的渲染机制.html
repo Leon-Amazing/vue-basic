@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #box1 {
+      width: 200px;
+      height: 200px;
+      background: red;
+      color: #fff;
+    }
+    #box2 {
+      width: 200px;
+      height: 200px;
+      background: black;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <button type="button" v-on:click="onChange">切换</button>
+    <div id="box1" key="a" v-if="flag">
+      <input type="text">
+      1111111111
+    </div>
+    <div id="box2" key="b" v-else>
+      <input type="text">
+      2222222222
+    </div>
+  </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+  /**
+    1、vue为了防止大量的dom操作，消耗的性能过多，尽可能的利用最低的消耗(diff算法)进行组件复用
+    当前例子里面，input输入框在虚拟节点中是完全一致的
+    2、如果不希望组件复用，加上一个属性 key，保证key的值不同，组件复用就会消失
+
+    3、每次更新视图，其实都是通过虚拟节点(虚拟DOM)对比真实节点进行更新，虚拟节点本质就是一个json对象
+  */
+
+  var oDiv = document.getElementById('app');
+
+  var VNode = {
+    tag: 'div',
+    attributes: [
+      {id: 'app'},
+      {class: 'abc'}
+    ],
+    children: [
+      {
+        tag: 'button',
+        attributes: [],
+        children: []
+      }
+    ],
+    innerText: ''
+  }
+
+  // 生成对象
+  // 绑定数据
+  // 根据模板创建一个与模板相同的json对象
+  // 将原模板元素全部删除
+  // 根据这个json对象创建出于模板完全一样的视图节点
+  // 将创建出来的视图更新到页面上
+
+  new Vue({
+    el: '#app',
+    data: {
+      flag: true
+    },
+    methods: {
+      onChange() {
+        this.flag = !this.flag;
+      }
+    }
+  })
+</script>
+</html>

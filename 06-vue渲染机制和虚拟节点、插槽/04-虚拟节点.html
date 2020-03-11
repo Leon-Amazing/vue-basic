@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div class="abc" id="box">
+      <p><span>22222</span>1111</p>
+      {{msg}}
+    </div>
+    <span>5555555</span>
+    <div>444444</div>
+  </div>
+</body>
+<!-- <script src="./vue.js"></script> -->
+<script>
+
+  var oDiv = document.querySelector('#app');
+
+  function Vue(obj) {
+    // 生成对象
+    // 绑定数据
+    obj.beforeCreate.call(this);
+    this.$el = document.querySelectorAll(obj.el)[0];
+    for(let attr in obj.data) {
+      this[attr] = obj.data[attr];
+    }
+    obj.created.call(this);
+    // 根据模板创建一个虚拟节点
+    this.$VNode = new CreateVNode(this.$el);
+    // 根据这个虚拟节点创建一个完全与模板一样的元素
+    obj.beforeMount.call(this);
+    document.body.removeChild(this.$el);
+    this.$element = createEl(this.$VNode);
+    // 将创建的元素挂载到页面上
+    document.body.appendChild(this.$element);
+    obj.mounted.call(this);
+  }
+
+  function CreateVNode(el) {
+    this.tag = el.nodeName;
+    this.attributes = [];
+    [...el.attributes].forEach(item => {
+      let obj = {};
+      obj[item.name] = item.value;
+      this.attributes.push(obj);
+    });
+    this.children = [];
+    [...el.children].forEach(item => {
+      this.children.push(new CreateVNode(item))
+    });
+    this.innerText = el.lastChild.nodeValue;
+  }
+
+  function createEl(VNode) {
+    let oRootElement = document.createElement(VNode.tag);
+    VNode.attributes.forEach(item => {
+      for(let attr in item) {
+        oRootElement.setAttribute(attr, item[attr]);
+      }
+    });
+
+    VNode.children.forEach(item => {
+      oRootElement.appendChild(createEl(item))
+    });
+
+    oRootElement.innerHTML += VNode.innerText;
+    return oRootElement;
+  }
+
+  new Vue({
+    el: '#app',
+    data: {
+      msg: '123'
+    },
+    beforeCreate() {
+      console.log(this.msg);
+    },
+    created() {
+      console.log(this);
+    },
+    beforeMount() {
+      console.log(document.getElementById('app'))
+    },
+    mounted() {
+      console.log(document.getElementById('app'))
+    }
+  })
+
+</script>
+</html>

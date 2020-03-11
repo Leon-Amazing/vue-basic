@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <div id="app">
+      <my-top v-on:sendchilddata='sendData'></my-top>
+      <my-tontent v-bind:getdata='list' v-on:delete = 'onDelete'></my-tontent>
+  </div>
+</body>
+<script src="./vue.js"></script>
+
+<!-- 上面 -->
+<script type="text/x-template" id="top">
+    <div>
+        <div class="page-top">
+          <div class="page-content">
+             <h2>任务计划列表</h2>
+          </div>
+        </div>
+        <div class='addcontent'>
+            <h3 class="big-title">添加任务：</h3>
+            <input
+              placeholder="例如：吃饭睡觉打豆豆；    提示：+回车即可添加任务"
+              class="task-input"
+              type="text"
+              v-model='msg'
+              v-on:change='send'
+            />
+      </div>
+    </div>
+</script>
+<!-- 内容1 -->
+<script type="text/x-template" id="content">
+  <div id='main'>
+      <div class="main">
+          <ul class="task-count" v-if='getdata.length != 0'>
+            <li>{{getdata.length}}个任务未完成</li>
+            <li>
+              <a href="javascirpt:;" class="active" v-on:click="onAll">所有任务</a>
+              <a href="javascirpt:;" v-on:click="onUnfinish">未完成任务</a>
+              <a href="javascirpt:;" v-on:click="onFinish">已完成任务</a>
+            </li>
+          </ul>
+<!-- 内容2 -->      
+          <h3 class="big-title">任务列表：</h3>
+          <div class="tasks">
+            <span class="no-task-tip" v-bind:class="{disappear:getdata.length>0}">还没有添加任何任务</span>
+
+            <ul class="todo-list">
+              <li class="todo" v-for='(item,i) in getdata'>
+                <div class="view">
+                  <input
+                    type="checkbox"
+                    class="toggle"
+                    v-bind:checked = 'item.isChecked'
+                  />
+                  <label>{{item.value}}</label>
+                  <button class="destroy" v-on:click='onDestroy(i)'></button>
+                </div>
+                <input
+                  class="edit"
+                  type="text"
+                />
+              </li>
+            </ul>
+
+          </div>
+        </div>
+  </div>
+</script>
+
+<script>
+  //组件1
+   Vue.component('my-top',{
+    template: '#top',
+    data(){
+      return{
+        msg:'',
+      }
+    },
+    methods:{
+      send(){  
+        this.$emit('sendchilddata',this.msg),
+        this.msg = ''
+      }
+    }
+   })
+  //组件2
+   
+   Vue.component('my-tontent',{
+    template: '#content',
+    props:['getdata'],
+    data(){
+    	return{
+    	}
+    },
+    methods:{
+      onClick(){
+       	this.isChecked = !this.isChecked
+       	 console.log(this.isChecked)
+       },
+       onDestroy(i){
+         this.$emit('delete',i)
+       },
+    	 onAll(){
+    	 	
+    	 },
+       onUnfinish(){
+    
+       },
+       onFinish(){
+       	
+       }
+    }
+   })
+
+   new Vue({
+     el:"#app",
+     data:{
+       list:[]
+     },
+     methods:{
+       sendData(val){
+         this.list.push({
+           value:val,
+           isChecked:false})
+       },
+       onDelete(index){
+          this.list.splice(index,1)
+       }
+     }
+   })
+</script>
+</html>
